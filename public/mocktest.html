@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Mental Health Assessment</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+
+        }
+
+        body {
+            background-image: url('o.jpg');
+            /* Replace 'your-image.jpg' with your image file */
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            font-family: Arial, sans-serif;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        form {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(34, 160, 233, 0.1);
+
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        input[type="number"],
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        .whatsapp-link {
+            display: inline-block;
+            background-color: #25d366;
+            /* WhatsApp green color */
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .whatsapp-link img {
+            vertical-align: middle;
+            margin-right: 10px;
+        }
+
+        .whatsapp-link:hover {
+            background-color: #128C7E;
+            /* Darker green on hover */
+        }
+
+        /* WhatsApp button styles */
+        .whatsapp-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #25d366;
+            /* WhatsApp green color */
+            border-radius: 50%;
+            padding: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .whatsapp-button a {
+            text-decoration: none;
+            color: #fff;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+
+        .whatsapp-button img {
+            width: 24px;
+            height: 24px;
+            margin-right: 5px;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <h1>Mental Health Assessment</h1>
+    <form id="mentalHealthForm">
+        <label for="q1">Question 1: How often do you feel overwhelmed by your schoolwork or responsibilities?
+            (1-5)</label>
+        <input type="number" name="q1" min="1" max="5" required>
+
+        <label for="q2">Question 2: How would you rate your current sleep quality? (1=poor, 5=excellent)</label>
+        <input type="number" name="q2" min="1" max="5" required>
+
+        <label for="q3">Question 3: Do you often experience feelings of sadness or hopelessness? (Yes/No)</label>
+        <select name="q3" required>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+        </select>
+
+        <label for="q4">Question 4: Have you lost interest in activities you used to enjoy? (Yes/No)</label>
+        <select name="q4" required>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+        </select>
+
+        <label for="q5">Question 5: How would you rate your stress level? (1-5, with 5 being extremely stressed)</label>
+        <input type="number" name="q5" min="1" max="5" required>
+
+        <label for="q6">Question 6: Are you experiencing changes in your appetite or weight? (Yes/No)</label>
+        <select name="q6" required>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+        </select>
+
+        <label for="q7">Question 7: Do you have difficulty concentrating or making decisions? (Yes/No)</label>
+        <select name="q7" required>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+        </select>
+
+        <label for="q8">Question 8: Have you had thoughts of self-harm or suicide in the past month? (Yes/No)</label>
+        <select name="q8" required>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+        </select>
+
+        <label for="q9">Question 9: How would you rate your social support system? (1-5, with 5 being very
+            strong)</label>
+        <input type="number" name="q9" min="1" max="5" required>
+
+        <label for="q10">Question 10: How satisfied are you with your overall mental well-being? (1-5, with 5 being very
+            satisfied)</label>
+        <input type="number" name="q10" min="1" max="5" required>
+
+        <div id="answersContainer"></div>
+
+        <button type="button" id="submitAnswersButton">Submit Answers</button>
+
+
+        <div class="whatsapp-button">
+            <a href="https://api.whatsapp.com/send?phone=7569447729" target="_blank">
+                <img src="whatsapp-icon.png" alt="WhatsApp">
+                Contact us on WhatsApp
+            </a>
+        </div>
+    </form>
+
+
+    <!-- Add more questions here -->
+
+
+
+
+    <div class="result">
+        <h2>Student Result</h2>
+        <canvas id="resultChart"></canvas>
+    </div>
+
+    <script>document.addEventListener("DOMContentLoaded", function () {
+            const form = document.getElementById("mentalHealthForm");
+            const submitAnswersButton = document.getElementById("submitAnswersButton");
+
+            // Define the actual answers here
+            const actualAnswers = {
+                q1: 3,
+                q2: 4,
+                q3: "No",
+                q4: "Yes",
+                q5: 2,
+                q6: "No",
+                q7: "No",
+                q8: "No",
+                q9: 4,
+                q10: 4,
+            };
+
+            submitAnswersButton.addEventListener("click", function () {
+                const formData = new FormData(form);
+                const studentAnswers = [];
+
+                formData.forEach((value, key) => {
+                    studentAnswers.push({
+                        question: key,
+                        answer: value,
+                        type: "student" // Indicate that these are student answers
+                    });
+                });
+
+                // Compare student and actual answers
+                const comparisonData = [];
+                for (const question in actualAnswers) {
+                    const actualAnswer = actualAnswers[question];
+                    const studentAnswer = studentAnswers.find(answer => answer.question === question);
+
+                    // Compare student's answer to actual answer
+                    const isCorrect = actualAnswer === studentAnswer.answer;
+
+                    comparisonData.push({
+                        question,
+                        isCorrect,
+                    });
+                }
+
+                // Send student answers to Firestore
+                fetch('/storeStudentAnswers', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(studentAnswers)
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        // Handle success response if needed
+                        console.log("Student answers submitted successfully:", data);
+
+                        // Render the comparison bar graph
+                        renderComparisonBarGraph(comparisonData);
+                    })
+                    .catch(error => {
+                        console.error("Error submitting student answers: ", error);
+                    });
+            });
+
+            function renderComparisonBarGraph(comparisonData) {
+                const labels = comparisonData.map(item => item.question);
+                const correctAnswers = comparisonData.map(item => item.isCorrect);
+
+                const backgroundColors = correctAnswers.map(isCorrect => isCorrect ? 'rgba(75, 192, 192, 0.6)' : 'rgba(255, 99, 132, 0.6)');
+
+                const ctx = document.getElementById("resultChart").getContext('2d');
+                const chart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Correct Answers',
+                            data: correctAnswers,
+                            backgroundColor: backgroundColors,
+                        }],
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                max: 1,
+                            }
+                        }
+                    },
+                });
+            }
+        });
+
+
+    </script>
+</body>
+
+</html>

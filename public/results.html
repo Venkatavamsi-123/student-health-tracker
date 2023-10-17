@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Mental Health Assessment</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+
+        }
+
+        body {
+            background-image: url('vi.jpg');
+            /* Replace 'your-image.jpg' with your image file */
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            font-family: Arial, sans-serif;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        form {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(34, 160, 233, 0.1);
+
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        input[type="number"],
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <h1>Results</h1>
+    <h2>Actual Answers</h2>
+    <div id="actualAnswersContainer"></div>
+
+    <h2>Student Results</h2>
+    <div id="studentResultsContainer"></div>
+
+    <h2>Comparison Results</h2>
+    <div id="comparisonResultsContainer"></div>
+    <!-- Add more questions here -->
+
+
+
+
+    <div class="result">
+        <h2>Student Result</h2>
+        <canvas id="resultChart"></canvas>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            const actualAnswersData = JSON.parse(urlParams.get("actualAnswers"));
+            const studentResultsData = JSON.parse(urlParams.get("studentAnswers"));
+            const comparisonResultsData = JSON.parse(urlParams.get("comparisonData"));
+
+            // Display actual answers
+            const actualAnswersContainer = document.getElementById("actualAnswersContainer");
+            // Loop through actualAnswersData and create HTML elements to display them
+
+            // Display student results
+            const studentResultsContainer = document.getElementById("studentResultsContainer");
+            // Loop through studentResultsData and create HTML elements to display them
+
+            // Display comparison results
+            const comparisonResultsContainer = document.getElementById("comparisonResultsContainer");
+            // Loop through comparisonResultsData and create HTML elements to display them
+        });
+
+
+    </script>
+</body>
+
+</html>
